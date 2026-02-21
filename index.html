@@ -3,201 +3,222 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>DBPC G.O.A.T.S V4.1</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Great+Vibes&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  <title>DON BOSCO G.O.A.T.S</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Great+Vibes&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode"></script>
-
   <style>
     :root { --bosco: #ff0055; --savio: #00d4ff; --ruva: #ffcc00; --thomas: #00ff88; --neon: #fbff00; }
-    body { font-family: 'Poppins', sans-serif; margin: 0; background: #000; color: white; min-height: 100vh; overflow-x: hidden; }
-    .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 15px; margin: 10px; }
-    .header { text-align: center; padding: 15px; border-bottom: 2px solid var(--savio); background: rgba(0,0,0,0.9); position: sticky; top:0; z-index:100; }
-    input, select { width: 100%; padding: 14px; margin: 8px 0; background: #1a1a1a; color: white; border: 1px solid #333; border-radius: 12px; font-size: 16px; box-sizing: border-box; }
-    .house-btn { padding: 25px; border-radius: 15px; border: none; font-weight: 900; color: #000; cursor: pointer; font-size: 18px; transition: 0.2s; }
+    body { font-family: 'Poppins', sans-serif; margin: 0; background-color: #000; background-size: cover; background-position: center; background-attachment: fixed; color: white; min-height: 100vh; }
+    .glass { background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 15px; margin: 10px; }
+    .header { display: flex; flex-direction: column; align-items: center; padding: 15px; border-bottom: 2px solid var(--savio); background: rgba(0,0,0,0.9); position: sticky; top: 0; z-index: 100; }
+    .logo-img { height: 45px; } .founder-img { height: 55px; width: 55px; border-radius: 50%; border: 2px solid var(--neon); object-fit: cover; }
+    input, select { width: 100%; padding: 12px; margin: 8px 0; background: #1a1a1a; color: white; border: 1px solid #333; border-radius: 12px; box-sizing: border-box; font-size: 16px; }
+    .house-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
+    .house-btn { padding: 20px; border-radius: 15px; border: none; font-weight: 900; color: #000; cursor: pointer; font-size: 16px; transition: 0.1s; }
     .house-btn:active { transform: scale(0.95); }
-    .h-bosco { background: var(--bosco); box-shadow: 0 0 15px var(--bosco); } 
-    .h-savio { background: var(--savio); box-shadow: 0 0 15px var(--savio); } 
-    .h-ruva { background: var(--ruva); box-shadow: 0 0 15px var(--ruva); } 
-    .h-thomas { background: var(--thomas); box-shadow: 0 0 15px var(--thomas); }
-    .btn-main { width: 100%; padding: 18px; border-radius: 12px; background: var(--neon); color: black; font-weight: 900; border: none; cursor: pointer; font-size: 16px; }
-    #reader { width: 100%; border-radius: 20px; display: none; margin: 15px 0; border: 3px solid var(--neon); overflow: hidden; }
-    #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--neon); color: black; padding: 12px 30px; border-radius: 50px; display: none; z-index: 5000; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
-    .stat-card { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 15px; margin-bottom: 15px; border-left: 5px solid var(--neon); }
-    #cert-template { width: 1000px; height: 700px; background: white; color: black; position: absolute; left: -9999px; padding: 60px; border: 20px solid #8e6d10; text-align: center; }
+    .h-bosco { background: var(--bosco); } .h-savio { background: var(--savio); } .h-ruva { background: var(--ruva); } .h-thomas { background: var(--thomas); }
+    .btn-main { width: 100%; padding: 14px; border-radius: 12px; background: var(--neon); color: black; font-weight: 900; border: none; cursor: pointer; }
+    .type-btn { flex: 1; padding: 15px; border-radius: 12px; font-weight: 900; cursor: pointer; border: 3px solid transparent; transition: 0.2s; }
+    .stat-card { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 12px; margin-bottom: 10px; border-left: 4px solid var(--neon); }
+    .rank-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--neon); color: black; padding: 12px 25px; border-radius: 50px; display: none; z-index: 3000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+    .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
   </style>
 </head>
 <body onload="initApp()">
 
+  <div id="loading" class="loading-overlay">
+    <div style="border: 4px solid #f3f3f3; border-top: 4px solid var(--neon); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;"></div>
+    <p style="margin-left: 15px; font-weight: bold; color: var(--neon);">Syncing Data...</p>
+  </div>
+  <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
+
   <div id="toast"></div>
 
   <div class="header">
-    <div style="display:flex; justify-content:center; gap:15px; align-items:center;">
-        <img id="main-logo" style="height:55px;">
-        <img id="main-founder" style="height:65px; width:65px; border-radius:50%; border:2px solid var(--neon);">
-    </div>
-    <div style="font-weight:900; margin-top:8px; font-size: 14px; letter-spacing: 1px;">DON BOSCO POLYTECHNIC <span style="color:var(--neon)">G.O.A.T.S</span></div>
+    <div style="display:flex; gap:15px;"><img id="main-logo" class="logo-img"><img id="main-founder" class="founder-img"></div>
+    <div style="font-weight:900; font-size:14px; margin-top:5px; text-align:center;">DON BOSCO POLYTECHNIC COLLEGE<br><span style="color:var(--neon); font-size:11px;">G.O.A.T.S</span></div>
   </div>
 
-  <div id="login-view" class="glass" style="max-width:400px; margin: 40px auto; text-align: center;">
-    <h3 style="color:var(--neon)">SYSTEM ACCESS</h3>
-    <select id="user-select"><option disabled selected>Fetching Departments...</option></select>
-    <input type="password" id="pass-input" placeholder="Access Key">
-    <button class="btn-main" onclick="login()">ENTER PORTAL</button>
+  <div id="login-view" class="glass" style="max-width:350px; margin: 40px auto;">
+    <select id="user-select"><option disabled selected>Connecting to Server...</option></select>
+    <input type="password" id="pass-input" placeholder="Enter Access Password">
+    <button class="btn-main" onclick="login()">LOGIN TO SYSTEM</button>
   </div>
 
   <div id="teacher-view" style="display:none;" class="glass">
-    <div style="text-align:center; color:var(--neon); font-weight:900; margin-bottom:15px; font-size: 18px;">DEPT: <span id="dept-label"></span></div>
+    <div style="text-align:center; color:var(--neon); font-weight:900; margin-bottom:10px;">DEPT: <span id="active-dept-label">-</span></div>
     
-    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:8px; margin-bottom:20px;">
-        <div style="text-align:center; background:#111; padding:10px; border-radius:12px; border-bottom:4px solid var(--bosco)">BOSCO<br><b id="s-Bosco" style="font-size:20px">0</b></div>
-        <div style="text-align:center; background:#111; padding:10px; border-radius:12px; border-bottom:4px solid var(--savio)">SAVIO<br><b id="s-Savio" style="font-size:20px">0</b></div>
-        <div style="text-align:center; background:#111; padding:10px; border-radius:12px; border-bottom:4px solid var(--ruva)">RUVA<br><b id="s-Ruva" style="font-size:20px">0</b></div>
-        <div style="text-align:center; background:#111; padding:10px; border-radius:12px; border-bottom:4px solid var(--thomas)">THOMAS<br><b id="s-Thomas" style="font-size:20px">0</b></div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:15px;">
+      <div style="text-align:center; font-size:10px; background:#111; padding:8px; border-radius:10px; border-top:4px solid var(--bosco)">BOSCO<br><b id="s-Bosco" style="font-size:14px;">0</b></div>
+      <div style="text-align:center; font-size:10px; background:#111; padding:8px; border-radius:10px; border-top:4px solid var(--savio)">SAVIO<br><b id="s-Savio" style="font-size:14px;">0</b></div>
+      <div style="text-align:center; font-size:10px; background:#111; padding:8px; border-radius:10px; border-top:4px solid var(--ruva)">RUVA<br><b id="s-Ruva" style="font-size:14px;">0</b></div>
+      <div style="text-align:center; font-size:10px; background:#111; padding:8px; border-radius:10px; border-top:4px solid var(--thomas)">THOMAS<br><b id="s-Thomas" style="font-size:14px;">0</b></div>
     </div>
 
     <div style="display:flex; gap:10px; margin-bottom:15px;">
-        <button class="btn-main" id="btn-neg" onclick="setMode('Negative')" style="background:#ff416c; color:white;">-5 PTS</button>
-        <button class="btn-main" id="btn-pos" onclick="setMode('Positive')" style="background:#00b09b; color:white; border:3px solid var(--neon);">+10 PTS</button>
+      <button class="type-btn" id="btn-neg" onclick="setMode('Negative')" style="background:#ff416c; color:white;">-5 POINTS</button>
+      <button class="type-btn" id="btn-pos" onclick="setMode('Positive')" style="background:#00b09b; color:white; border-color:var(--neon);">+10 POINTS</button>
     </div>
 
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:20px;">
-      <button class="house-btn h-bosco" onclick="processEntry('Manual Entry', 'Bosco')">BOSCO</button>
-      <button class="house-btn h-savio" onclick="processEntry('Manual Entry', 'Savio')">SAVIO</button>
-      <button class="house-btn h-ruva" onclick="processEntry('Manual Entry', 'Ruva')">RUVA</button>
-      <button class="house-btn h-thomas" onclick="processEntry('Manual Entry', 'Thomas')">THOMAS</button>
+    <div class="house-grid">
+      <button class="house-btn h-bosco" onclick="processEntry('HOUSE_WINNER', 'Bosco')">BOSCO</button>
+      <button class="house-btn h-savio" onclick="processEntry('HOUSE_WINNER', 'Savio')">SAVIO</button>
+      <button class="house-btn h-ruva" onclick="processEntry('HOUSE_WINNER', 'Ruva')">RUVA</button>
+      <button class="house-btn h-thomas" onclick="processEntry('HOUSE_WINNER', 'Thomas')">THOMAS</button>
     </div>
 
-    <button id="cam-btn" onclick="toggleCamera()" class="btn-main" style="background:white; border-radius: 50px;">📸 OPEN RAPID SCANNER</button>
-    <div id="reader"></div>
-
-    <div class="stat-card" style="margin-top:20px;">
-        <input type="text" id="t-name" placeholder="Staff Name">
-        <select id="p-cat">
-            <option>Academic Excellence</option>
-            <option>Sports & Games</option>
-            <option>Discipline & Conduct</option>
-            <option>Cultural Events</option>
-        </select>
+    <div style="border-top: 1px solid #333; padding-top: 10px;">
+      <input type="text" id="m-student" placeholder="Student Name (Manual)">
+      <select id="m-house"><option disabled selected>Select House</option><option>Bosco</option><option>Savio</option><option>Ruva</option><option>Thomas</option></select>
+      <button onclick="submitManual()" style="width:100%; background:#333; color:white; border:none; padding:12px; border-radius:8px; margin-bottom:10px; font-weight:bold;">SUBMIT MANUAL ENTRY</button>
     </div>
-    <button class="btn-main" style="background:#333; color:white; margin-top:10px;" onclick="location.reload()">SECURE LOGOUT</button>
+
+    <button id="cam-btn" onclick="toggleCamera()" style="background:var(--neon); border:none; padding:15px; border-radius:50px; font-weight:900; width:100%; font-size:16px; margin-top:5px;">SCAN STUDENT QR</button>
+    <div id="reader" style="width:100%; border-radius:15px; overflow:hidden; border:2px solid var(--neon); display:none; margin:15px 0;"></div>
+
+    <div style="margin-top: 15px;">
+      <input type="text" id="t-name" placeholder="Staff/Teacher Name">
+      <select id="p-cat">
+        <option>Quiz/Program</option><option>YouTube Contribution</option><option>Assembly Contribution</option>
+        <option>Extra Activities</option><option>Discipline</option><option>Academics</option><option>Sports</option>
+      </select>
+    </div>
+    
+    <button class="btn-main" style="background:#222; color:white; margin-top:15px;" onclick="logout()">LOGOUT</button>
   </div>
 
   <div id="admin-view" style="display:none;" class="glass">
-    <h2 style="text-align:center; color:var(--neon); font-family:'Cinzel';">ANNUAL HALL OF FAME</h2>
     <div id="admin-content"></div>
-    <button class="btn-main" onclick="location.reload()">LOGOUT</button>
-  </div>
-
-  <div id="cert-template">
-    <h1 style="font-family:'Cinzel'; font-size: 45px;">DON BOSCO POLYTECHNIC</h1>
-    <p style="font-size: 20px;">ANNUAL EXCELLENCE AWARD</p>
-    <div style="margin: 40px 0;">
-        <p>This is to certify that</p>
-        <h2 id="pdf-name" style="font-size:55px; border-bottom:3px solid #000; display:inline-block; padding: 0 30px;"></h2>
-        <p>has been recognized as</p>
-        <h3 id="pdf-award" style="font-family:'Great Vibes'; font-size:50px; color:#8e6d10;"></h3>
-    </div>
-    <p>Awarded for outstanding contribution and performance.</p>
+    <button class="btn-main" onclick="logout()" style="margin-top:20px;">LOGOUT</button>
   </div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxm_5lhVXL1_-YW1fIPIr17Ha5DXd11jkSMJlOKUtesspD5UcB-R4e3dpyMi4fyosUP/exec";
-    let html5QrCode = null, currentMode = "Positive", currentDept = "", scores = { Bosco:0, Savio:0, Ruva:0, Thomas:0 }, lastScanned = "";
+    // NEW DEPLOYED URL APPLIED
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylP7a-LGtMUFQYYMuZFrqWRLc4I9dnFOXQptTkUg8HTQzfIp-P1-Qj0AzQ038vx34/exec";
 
-    async function api(action, data = {}) {
+    let html5QrCode = null, scanActive = false, currentMode = "Positive", currentDept = "";
+    let sessionScores = { Bosco:0, Savio:0, Ruva:0, Thomas:0 };
+
+    async function callAPI(payload, silent = false) {
+      if(!silent) document.getElementById('loading').style.display = 'flex';
       try {
-        const res = await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify({ action, data }) });
-        return await res.json();
-      } catch(e) { console.log(e); return null; }
+        const response = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+        const res = await response.json();
+        if(!silent) document.getElementById('loading').style.display = 'none';
+        return res;
+      } catch (e) { 
+        document.getElementById('loading').style.display = 'none'; 
+        console.error("Sync Error:", e);
+      }
     }
 
     async function initApp() {
-      const depts = await api('getDepts');
-      let s = document.getElementById('user-select');
-      s.innerHTML = '<option disabled selected>Select Department</option>';
-      if(depts) depts.forEach(d => s.add(new Option(d, d)));
-
-      const imgs = await api('getImages');
-      if(imgs) {
-        document.getElementById('main-logo').src = imgs.thumbLogo;
-        document.getElementById('main-founder').src = imgs.thumbFounder;
+      const d = await callAPI({ action: 'getInitialData' });
+      if(d) {
+        document.body.style.backgroundImage = `url('${d.images.thumbBg}')`;
+        document.getElementById('main-logo').src = d.images.thumbLogo;
+        document.getElementById('main-founder').src = d.images.thumbFounder;
+        let s = document.getElementById('user-select'); s.innerHTML = '<option disabled selected>Select Department</option>';
+        d.departments.forEach(dept => s.add(new Option(dept, dept)));
       }
+    }
+
+    function setMode(m) {
+      currentMode = m;
+      document.getElementById('btn-pos').style.borderColor = (m === 'Positive') ? 'var(--neon)' : 'transparent';
+      document.getElementById('btn-neg').style.borderColor = (m === 'Negative') ? 'var(--neon)' : 'transparent';
     }
 
     async function login() {
       const u = document.getElementById('user-select').value, p = document.getElementById('pass-input').value;
-      const r = await api('login', { u, p });
+      if(!u || !p) return alert("Select Dept and enter password");
+      const r = await callAPI({ action: 'login', user: u, pass: p });
       if(r && r.success) {
         document.getElementById('login-view').style.display='none';
         if(r.role === 'Admin') { document.getElementById('admin-view').style.display='block'; loadAdmin(); }
-        else { document.getElementById('teacher-view').style.display='block'; currentDept = r.dept; document.getElementById('dept-label').innerText = r.dept; }
-      } else alert("Access Denied: Check Credentials");
-    }
-
-    function setMode(m) { 
-        currentMode = m;
-        document.getElementById('btn-pos').style.border = m==='Positive'?'3px solid var(--neon)':'none';
-        document.getElementById('btn-neg').style.border = m==='Negative'?'3px solid var(--neon)':'none';
-    }
-
-    function processEntry(sName, house) {
-      if(sName === lastScanned) return; 
-      lastScanned = sName; setTimeout(()=>lastScanned="", 3000);
-      
-      const tName = document.getElementById('t-name').value;
-      if(!tName) return alert("Please enter Staff Name");
-      
-      const pts = (currentMode === 'Positive') ? 10 : -5;
-      scores[house] += pts;
-      document.getElementById('s-' + house).innerText = scores[house];
-      
-      showToast(`${sName} (${house}): ${pts > 0 ? '+' : ''}${pts}`);
-      if(pts > 0) confetti({ particleCount: 80, spread: 60, origin: { y: 0.7 } });
-      
-      api('submit', { dept: currentDept, studentName: sName, teacherName: tName, category: document.getElementById('p-cat').value, house: house, type: currentMode });
+        else { 
+          document.getElementById('teacher-view').style.display='block'; 
+          currentDept = r.dept; 
+          document.getElementById('active-dept-label').innerText = r.dept; 
+        }
+      } else alert("Access Denied: Invalid Credentials");
     }
 
     async function toggleCamera() {
       const rd = document.getElementById('reader'), btn = document.getElementById('cam-btn');
-      if (html5QrCode && html5QrCode.isScanning) { await html5QrCode.stop(); rd.style.display='none'; btn.innerText = "📸 OPEN RAPID SCANNER"; return; }
-      rd.style.display='block'; btn.innerText = "⏹️ STOP SCANNER";
-      if (!html5QrCode) html5QrCode = new Html5Qrcode("reader");
-      html5QrCode.start({ facingMode: "environment" }, { fps: 25, qrbox: 280 }, (text) => {
-        const p = text.split('|');
-        if(p.length >= 3) processEntry(p[0].trim(), p[2].trim().charAt(0).toUpperCase() + p[2].trim().slice(1).toLowerCase());
-      });
+      if (!scanActive) {
+        rd.style.display = 'block'; btn.innerText = 'STOP SCANNER';
+        html5QrCode = new Html5Qrcode("reader");
+        await html5QrCode.start({ facingMode: "environment" }, { fps: 25, qrbox: 250 }, (t) => {
+          const p = t.split('|'); // Expected Name|Dept|House
+          if(p.length >= 3) { processEntry(p[0], p[2]); stopCam(); }
+          else { showToast("Invalid QR Format"); }
+        });
+        scanActive = true;
+      } else { stopCam(); }
+    }
+
+    async function stopCam() {
+      if (html5QrCode) { try { if(html5QrCode.isScanning) await html5QrCode.stop(); await html5QrCode.clear(); } catch(e){} }
+      document.getElementById('reader').style.display = 'none'; document.getElementById('cam-btn').innerText = 'SCAN STUDENT QR'; scanActive = false;
+    }
+
+    function submitManual() {
+      const n = document.getElementById('m-student').value, h = document.getElementById('m-house').value;
+      if(!n || h.includes("Select")) return alert("Fill Name and House");
+      processEntry(n, h); document.getElementById('m-student').value = "";
+    }
+
+    // FEATURE: OPTIMISTIC UI (Instant Feedback - Zero Waiting)
+    function processEntry(sName, house) {
+      const tName = document.getElementById('t-name').value;
+      if(!tName) return alert("Teacher name required for logging!");
+      
+      const pts = (currentMode === 'Positive') ? 10 : -5;
+      
+      // Update UI Instantly
+      if(sessionScores.hasOwnProperty(house)) {
+        sessionScores[house] += pts;
+        document.getElementById('s-' + house).innerText = sessionScores[house];
+        showToast(`Instant Log: ${sName} (${pts})`);
+        if(pts > 0) confetti({ particleCount: 60, spread: 70, origin: { y: 0.7 } });
+
+        // Background Sync (Teacher never waits for wheel)
+        callAPI({ 
+          action: 'submitPoint', 
+          data: { dept: currentDept, studentName: sName, teacherName: tName, category: document.getElementById('p-cat').value, house: house, type: currentMode } 
+        }, true);
+      }
     }
 
     async function loadAdmin() {
-      const d = await api('getAdmin');
+      const d = await callAPI({ action: 'getAdminData' });
       if(!d) return;
-      let html = `<div class="stat-card" style="background:var(--neon); color:black; text-align:center;"><h3>🏆 MOST ACTIVE DEPT: ${d.activeDeptWinner}</h3></div>`;
-      html += `<div class="stat-card"><h4>🏛️ ANNUAL HOUSE POINTS</h4>`;
-      d.annualHouses.forEach((h, i) => { html += `<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #333;"><span>${i+1}. ${h[0]}</span><b>${h[1]} PTS</b></div>`; });
-      html += `</div><div class="stat-card"><h4>👤 TOP 3 STUDENTS BY DEPT</h4>`;
-      d.annualTop3.forEach(dept => {
-        html += `<div style="margin-top:15px; border-top: 1px solid #444; padding-top:10px;"><b>${dept.dept}</b>`;
-        dept.winners.forEach((w, i) => { 
-            html += `<div style="display:flex; justify-content:space-between; align-items:center; font-size:14px; margin-top:5px;"><span>${i+1}. ${w[0]} (${w[1]} pts)</span><button onclick="genPDF('${w[0]}','Rank ${i+1}')" style="background:var(--neon); border:none; border-radius:4px; padding:2px 8px; font-size:10px; font-weight:bold;">PDF</button></div>`;
-        });
-        html += `</div>`;
-      });
-      document.getElementById('admin-content').innerHTML = html + `</div>`;
+      let h = `<h3 style="color:var(--neon); margin:0 0 10px 0;">ADMIN DASHBOARD</h3>
+      <div class="stat-card" style="border-left-color: var(--savio);">
+        <p style="font-size:10px; color:var(--savio); margin:0;">ACTIVE DEPT OF WEEK</p>
+        <b style="font-size:16px;">${d.activeDeptOfWeek.name}</b><br>
+        <span style="font-size:10px;">${d.activeDeptOfWeek.count} Unique Students Managed</span>
+      </div>
+      <p style="color:var(--neon); font-size:11px; margin:15px 0 5px 0;">YEAR-END DEPT TOP 3</p>
+      <div class="stat-card">${d.yearEndWinners.map(w => `<div style="margin-bottom:8px;"><b style="color:var(--savio); font-size:11px;">${w.dept}</b>${w.toppers.map((t,i) => `<div class="rank-row"><span>${i+1}. ${t[0]}</span><b>${t[1]} pts</b></div>`).join('')}</div>`).join('')}</div>
+      <p style="color:var(--savio); font-size:11px; margin:15px 0 5px 0;">YEARLY HOUSE STANDINGS</p>
+      <div class="stat-card">${d.yearlyHouses.map((hs, i) => `<div class="rank-row"><span>${i+1}. ${hs[0]}</span><b>${hs[1]} pts</b></div>`).join('')}</div>
+      <p style="color:var(--ruva); font-size:11px; margin:15px 0 5px 0;">STAR TEACHERS</p>
+      <div class="stat-card">${d.starTeachers.map(t => `<div class="rank-row"><span>${t[0]}</span><b>${t[1]} entries</b></div>`).join('')}</div>`;
+      document.getElementById('admin-content').innerHTML = h;
     }
 
-    async function genPDF(n, a) {
-      document.getElementById('pdf-name').innerText = n; document.getElementById('pdf-award').innerText = a;
-      const canvas = await html2canvas(document.getElementById('cert-template'), { scale: 2 });
-      const pdf = new jspdf.jsPDF('l', 'mm', 'a4');
-      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 297, 210);
-      pdf.save(`${n}_Award.pdf`);
+    function showToast(m) { 
+      const t = document.getElementById('toast'); 
+      t.innerText = m; t.style.display = 'block'; 
+      setTimeout(() => t.style.display='none', 2500); 
     }
-
-    function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.style.display='block'; setTimeout(()=>t.style.display='none', 3000); }
+    function logout() { location.reload(); }
   </script>
 </body>
 </html>
