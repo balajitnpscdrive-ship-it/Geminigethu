@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>DBPC G.O.A.T.S V3.4</title>
+  <title>DBPC G.O.A.T.S V3.9</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#fbff00">
+  
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Great+Vibes&family=Cinzel:wght@700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -15,17 +16,17 @@
   <style>
     :root { --bosco: #ff0055; --savio: #00d4ff; --ruva: #ffcc00; --thomas: #00ff88; --neon: #fbff00; }
     body { font-family: 'Poppins', sans-serif; margin: 0; background: #000 center/cover fixed; color: white; min-height: 100vh; }
-    .glass { background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 15px; margin: 10px; }
+    .glass { background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 15px; margin: 10px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
     .header { display: flex; flex-direction: column; align-items: center; padding: 15px; border-bottom: 2px solid var(--savio); background: rgba(0,0,0,0.9); position: sticky; top: 0; z-index: 100; }
     input, select { width: 100%; padding: 12px; margin: 8px 0; background: #1a1a1a; color: white; border: 1px solid #333; border-radius: 12px; font-size: 16px; box-sizing: border-box; }
-    .house-btn { padding: 22px; border-radius: 15px; border: none; font-weight: 900; color: #000; cursor: pointer; font-size: 16px; transition: 0.1s; }
+    .house-btn { padding: 22px; border-radius: 15px; border: none; font-weight: 900; color: #000; cursor: pointer; font-size: 16px; }
     .h-bosco { background: var(--bosco); } .h-savio { background: var(--savio); } .h-ruva { background: var(--ruva); } .h-thomas { background: var(--thomas); }
-    .btn-main { width: 100%; padding: 16px; border-radius: 12px; background: var(--neon); color: black; font-weight: 900; border: none; cursor: pointer; }
+    .btn-main { width: 100%; padding: 16px; border-radius: 12px; background: var(--neon); color: black; font-weight: 900; border: none; cursor: pointer; font-size: 16px; transition: 0.2s; }
+    .btn-main:active { transform: scale(0.98); opacity: 0.8; }
     .stat-card { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; margin-bottom: 15px; border-left: 5px solid var(--neon); }
     .rank-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
     #reader { width: 100%; border-radius: 20px; display: none; margin: 15px 0; border: 3px solid var(--neon); background: #000; overflow: hidden; }
-    #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--neon); color: black; padding: 15px 30px; border-radius: 50px; display: none; z-index: 5000; font-weight: 900; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-    
+    #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--neon); color: black; padding: 15px 30px; border-radius: 50px; display: none; z-index: 5000; font-weight: 900; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     #cert-template { width: 1000px; height: 700px; background: white; color: black; position: absolute; left: -9999px; padding: 60px; box-sizing: border-box; border: 20px solid #8e6d10; outline: 5px solid #8e6d10; outline-offset: -35px; }
   </style>
 </head>
@@ -35,33 +36,31 @@
 
   <div class="header">
     <div style="display:flex; gap:15px; align-items: center;">
-      <img id="main-logo" style="height:55px;">
-      <img id="main-founder" style="height:65px; width:65px; border-radius:50%; border:2px solid var(--neon);">
+      <img id="main-logo" style="height:55px;" alt="Logo">
+      <img id="main-founder" style="height:65px; width:65px; border-radius:50%; border:2px solid var(--neon);" alt="Founder">
     </div>
-    <div style="font-weight:900; text-align:center; font-size:14px; margin-top:8px;">
-      DON BOSCO POLYTECHNIC COLLEGE<br><span style="color:var(--neon)">G.O.A.T.S V3.4</span>
-    </div>
+    <div style="font-weight:900; text-align:center; font-size:14px; margin-top:8px;">DON BOSCO POLYTECHNIC COLLEGE<br><span style="color:var(--neon)">G.O.A.T.S V3.9</span></div>
   </div>
 
-  <div id="login-view" class="glass" style="max-width:400px; margin: 40px auto;">
-    <select id="user-select"><option disabled selected>Connecting to Script...</option></select>
-    <input type="password" id="pass-input" placeholder="Access Key">
-    <button class="btn-main" onclick="login()">LOGIN</button>
+  <div id="login-view" class="glass" style="max-width:400px; margin: 40px auto; text-align: center;">
+    <div id="connection-status" style="font-size: 12px; color: #888; margin-bottom: 10px;">Connecting to Script...</div>
+    <select id="user-select"><option disabled selected>Select Department</option></select>
+    <input type="password" id="pass-input" placeholder="Enter Access Key">
+    <button class="btn-main" onclick="login()">ENTER SYSTEM</button>
   </div>
 
   <div id="teacher-view" style="display:none;" class="glass">
-    <div style="text-align:center; color:var(--neon); font-weight:900; margin-bottom:15px;">DEPT: <span id="active-dept-label">-</span></div>
-    
+    <div style="text-align:center; color:var(--neon); font-weight:900; margin-bottom:15px; background:rgba(255,255,255,0.08); padding:10px; border-radius:12px;">DEPT: <span id="active-dept-label">...</span></div>
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:20px;">
-      <div style="text-align:center; font-size:11px; background:#111; padding:10px; border-radius:12px; border-bottom:4px solid var(--bosco)">BOSCO<br><b id="s-Bosco" style="font-size:22px;">0</b></div>
-      <div style="text-align:center; font-size:11px; background:#111; padding:10px; border-radius:12px; border-bottom:4px solid var(--savio)">SAVIO<br><b id="s-Savio" style="font-size:22px;">0</b></div>
-      <div style="text-align:center; font-size:11px; background:#111; padding:10px; border-radius:12px; border-bottom:4px solid var(--ruva)">RUVA<br><b id="s-Ruva" style="font-size:22px;">0</b></div>
-      <div style="text-align:center; font-size:11px; background:#111; padding:10px; border-radius:12px; border-bottom:4px solid var(--thomas)">THOMAS<br><b id="s-Thomas" style="font-size:22px;">0</b></div>
+      <div style="text-align:center; font-size:11px; background:#111; padding:12px; border-radius:12px; border-bottom:4px solid var(--bosco)">BOSCO<br><b id="s-Bosco" style="font-size:22px;">0</b></div>
+      <div style="text-align:center; font-size:11px; background:#111; padding:12px; border-radius:12px; border-bottom:4px solid var(--savio)">SAVIO<br><b id="s-Savio" style="font-size:22px;">0</b></div>
+      <div style="text-align:center; font-size:11px; background:#111; padding:12px; border-radius:12px; border-bottom:4px solid var(--ruva)">RUVA<br><b id="s-Ruva" style="font-size:22px;">0</b></div>
+      <div style="text-align:center; font-size:11px; background:#111; padding:12px; border-radius:12px; border-bottom:4px solid var(--thomas)">THOMAS<br><b id="s-Thomas" style="font-size:22px;">0</b></div>
     </div>
 
     <div style="display:flex; gap:10px; margin-bottom:15px;">
-      <button class="btn-main" id="btn-neg" onclick="setMode('Negative')" style="background:#ff416c; margin:0;">-5 PTS</button>
-      <button class="btn-main" id="btn-pos" onclick="setMode('Positive')" style="background:#00b09b; margin:0; border:3px solid var(--neon);">+10 PTS</button>
+      <button class="btn-main" id="btn-neg" onclick="setMode('Negative')" style="background:#ff416c; color:white; margin:0;">-5 PTS</button>
+      <button class="btn-main" id="btn-pos" onclick="setMode('Positive')" style="background:#00b09b; color:white; margin:0; border: 3px solid var(--neon);">+10 PTS</button>
     </div>
 
     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:15px;">
@@ -71,48 +70,71 @@
       <button class="house-btn h-thomas" onclick="processEntry('House Entry', 'Thomas')">THOMAS</button>
     </div>
 
-    <button id="cam-btn" onclick="toggleCamera()" style="background:var(--neon); border:none; padding:18px; border-radius:50px; font-weight:900; width:100%; color:black; font-size:18px;">📸 OPEN SCANNER</button>
+    <button id="cam-btn" onclick="toggleCamera()" style="background:var(--neon); border:none; padding:18px; border-radius:50px; font-weight:900; width:100%; color:black;">📸 OPEN SCANNER</button>
     <div id="reader"></div>
 
     <input type="text" id="t-name" placeholder="Teacher Name">
     <select id="p-cat"><option>Academics</option><option>Sports</option><option>Discipline</option><option>Cultural</option></select>
-    <button class="btn-main" style="background:#222; color:white; margin-top:15px;" onclick="logout()">LOGOUT</button>
+    <button class="btn-main" style="background:#333; color:white; margin-top:20px;" onclick="logout()">LOGOUT</button>
   </div>
 
   <div id="admin-view" style="display:none;" class="glass">
+    <h2 style="text-align:center; color:var(--neon); font-family:'Cinzel';">ADMIN DASHBOARD</h2>
     <div id="admin-content"></div>
-    <button class="btn-main" onclick="logout()">LOGOUT</button>
+    <button class="btn-main" onclick="logout()">LOGOUT ADMIN</button>
   </div>
 
   <div id="cert-template">
-    <div style="text-align:center; width:100%;"><h1 style="font-family:'Cinzel';">DON BOSCO POLYTECHNIC</h1><div id="pdf-name" style="font-size:50px; border-bottom:2px solid #000;"></div></div>
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <img id="cert-logo" style="height:100px;">
+      <div style="text-align:center;"><h1 style="font-family:'Cinzel'; margin:0;">DON BOSCO POLYTECHNIC</h1><h3>ANNUAL AWARD OF EXCELLENCE</h3></div>
+      <img id="cert-founder" style="height:100px; width:100px; border-radius:50%;">
+    </div>
+    <div style="text-align:center; margin-top:50px;">
+      <p style="font-size:20px;">This certificate is proudly awarded to</p>
+      <div id="pdf-name" class="cert-name"></div>
+      <p style="font-size:20px;">for securing the title of</p>
+      <div id="pdf-award" class="cert-award"></div>
+    </div>
   </div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx6jyYttptKKLL5c3s5ku_pVGmhTU4m7B57Sp8CfC_fkTJfy3vAFb3qFvfqb3kOLwrdww/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx6fI-AmCUf1jT4dehgm4bfvTV0sSEAtLc-FFAzwxH2qHTtfY7clwsMkvL5QuxfLEpf7g/exec";
     let html5QrCode = null, scores = { Bosco:0, Savio:0, Ruva:0, Thomas:0 }, currentMode = "Positive", currentDept = "", lastScanned = "";
 
     async function api(action, data = {}) {
       try {
         const res = await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify({ action, data }) });
-        return res.json();
+        const json = await res.json();
+        return json;
       } catch(e) { 
         console.error(e);
-        showToast("Connection Error!");
         return null; 
       }
     }
 
     async function initApp() {
+      const status = document.getElementById('connection-status');
+      const depts = await api('getDepts');
+      
+      if(!depts) {
+        status.innerHTML = "<b style='color:red'>AUTH ERROR:</b> Please Run the script in Google Apps Script editor and click 'Allow'.";
+        return;
+      }
+      
+      status.innerText = "Connected to DBPC Cloud";
+      let s = document.getElementById('user-select');
+      s.innerHTML = '<option disabled selected>Select Department</option>';
+      depts.forEach(d => s.add(new Option(d, d)));
+
       const imgs = await api('getImages');
       if(imgs) {
         document.getElementById('main-logo').src = imgs.thumbLogo;
         document.getElementById('main-founder').src = imgs.thumbFounder;
+        document.getElementById('cert-logo').src = imgs.fullLogo;
+        document.getElementById('cert-founder').src = imgs.fullFounder;
+        if(imgs.thumbBg) document.body.style.backgroundImage = `url('${imgs.thumbBg}')`;
       }
-      const depts = await api('getDepts');
-      let s = document.getElementById('user-select');
-      s.innerHTML = '<option disabled selected>Select Department</option>';
-      if(depts) depts.forEach(d => s.add(new Option(d, d)));
       
       if(localStorage.getItem('dbpc_dept')) {
         document.getElementById('user-select').value = localStorage.getItem('dbpc_dept');
@@ -122,39 +144,35 @@
 
     async function login() {
       const u = document.getElementById('user-select').value, p = document.getElementById('pass-input').value;
+      if(!u || !p) return alert("Fill all fields");
       const r = await api('login', { u, p });
       if(r && r.success) {
         localStorage.setItem('dbpc_dept', u);
         document.getElementById('login-view').style.display='none';
         if(r.role === 'Admin') { document.getElementById('admin-view').style.display='block'; loadAdmin(); }
         else { document.getElementById('teacher-view').style.display='block'; currentDept = r.dept; document.getElementById('active-dept-label').innerText = r.dept; }
-      } else alert("Denied");
+      } else alert("Invalid Key or User");
     }
 
     function logout() { localStorage.removeItem('dbpc_dept'); location.reload(); }
-
+    
     function setMode(m) { 
-        currentMode = m; 
-        document.getElementById('btn-pos').style.border = m==='Positive'?'3px solid var(--neon)':'none';
-        document.getElementById('btn-neg').style.border = m==='Negative'?'3px solid var(--neon)':'none';
+      currentMode = m; 
+      document.getElementById('btn-pos').style.border = m==='Positive'?'3px solid var(--neon)':'none';
+      document.getElementById('btn-neg').style.border = m==='Negative'?'3px solid var(--neon)':'none';
     }
 
     function processEntry(sName, house) {
-      if(sName === lastScanned) return; // Prevent double trigger
-      lastScanned = sName;
-      setTimeout(() => { lastScanned = ""; }, 3000); // 3-sec cooldown
-
+      if(sName === lastScanned) return;
+      lastScanned = sName; setTimeout(() => lastScanned = "", 3000);
       const tName = document.getElementById('t-name').value;
       if(!tName) return alert("Enter Teacher Name!");
       localStorage.setItem('dbpc_name', tName);
-      
       const pts = (currentMode === 'Positive') ? 10 : -5;
       scores[house] += pts;
       document.getElementById('s-' + house).innerText = scores[house];
-      
       showToast(`${sName}: ${pts > 0 ? '+' : ''}${pts}`);
-      if(pts > 0) confetti({ particleCount: 50, spread: 50, origin: { y: 0.8 } });
-      
+      if(pts > 0) confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 } });
       api('submit', { dept: currentDept, studentName: sName, teacherName: tName, category: document.getElementById('p-cat').value, house: house, type: currentMode });
     }
 
@@ -165,30 +183,37 @@
       if (!html5QrCode) html5QrCode = new Html5Qrcode("reader");
       html5QrCode.start({ facingMode: "environment" }, { fps: 20, qrbox: 250 }, (text) => {
         const p = text.split('|');
-        if(p.length >= 3) { 
-          const h = p[2].trim().charAt(0).toUpperCase() + p[2].trim().slice(1).toLowerCase();
-          processEntry(p[0].trim(), h); 
-          // Note: Scanner stays open for "Rapid Scan" mode
-        }
-      }).catch(err => alert("Camera Error"));
+        if(p.length >= 3) { processEntry(p[0].trim(), p[2].trim().charAt(0).toUpperCase() + p[2].trim().slice(1).toLowerCase()); }
+      }).catch(err => alert("Camera permission denied"));
     }
 
     async function loadAdmin() {
       const d = await api('getAdmin');
       if(!d) return;
       document.getElementById('admin-content').innerHTML = `
-        <div class="stat-card" style="background:var(--neon); color:black;"><h4>🏆 ACTIVE DEPT: ${d.activeDeptWinner}</h4></div>
-        <div class="stat-card"><h4>🏛️ ANNUAL HOUSE RANK</h4>
+        <div class="stat-card" style="background:var(--neon); color:black; text-align:center;"><h4>🏆 ACTIVE DEPT: ${d.activeDeptWinner}</h4></div>
+        <div class="stat-card"><h4>🏛️ ANNUAL HOUSE PODIUM</h4>
           ${d.annualHouses.map((h, i) => `<div class="rank-row">${i+1}. ${h[0]} <b>${h[1]} pts</b></div>`).join('')}
         </div>
-      `;
+        <div class="stat-card"><h4>👤 STUDENT TOP 3</h4>
+          ${d.annualTop3.map(dept => `
+            <div style="margin-bottom:10px; border-bottom:1px solid #333; padding-bottom:5px;">
+              <b>${dept.dept}</b>
+              ${dept.winners.map((w, i) => `<div class="rank-row">${i+1}. ${w[0]} <button onclick="genPDF('${w[0]}','Rank ${i+1}')" style="font-size:10px; padding:3px 8px;">PDF</button></div>`).join('')}
+            </div>
+          `).join('')}
+        </div>`;
     }
 
-    function showToast(m) { 
-        const t = document.getElementById('toast'); 
-        t.innerText = m; t.style.display='block'; 
-        setTimeout(()=>t.style.display='none', 3000); 
+    async function genPDF(n, a) {
+      document.getElementById('pdf-name').innerText = n; document.getElementById('pdf-award').innerText = a;
+      const canvas = await html2canvas(document.getElementById('cert-template'), { scale: 2 });
+      const pdf = new jspdf.jsPDF('l', 'mm', 'a4');
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 297, 210);
+      pdf.save(`${n}_Award.pdf`);
     }
+
+    function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.style.display='block'; setTimeout(()=>t.style.display='none', 3000); }
   </script>
 </body>
 </html>
